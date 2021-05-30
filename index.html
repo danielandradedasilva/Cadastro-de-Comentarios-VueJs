@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <!--Importando Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Importando materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <title>Cadastro de Comentarios</title>
+</head>
+
+<body>
+
+    <!--Import Vue.js-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <div id="app"></div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            template: `
+            
+            <div class="container">
+
+                <h1 class="blue-text text-darken-1 center-align">Cadastro de comentarios</h1>
+                <hr>
+                <div class="row">
+                    <div class="col s12">
+                        <form class="row">
+                            <div class="input-field col s12">
+                            <input id="name" name="author" type="text" v-model="name">
+                            <label for="name" required>Nome</label>
+                            </div>
+                            <br>
+                            <div class="input-field col s12">
+                            <textarea id="message" class="materialize-textarea" v-model="message"></textarea>
+                            <label for="message">Comentario</label>
+                            </div>
+                            <br>
+                            <button v-on:click="addComment" class="btn waves-effect waves-light" type="submit" name="action">Comentar
+                            <i class="material-icons right">send</i>
+                            </button>
+                        </form>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col s12 ">
+                                <div class="card blue-grey darken-1" v-for="(comment, index) in comments">
+                                    <div class="card-content white-text">
+                                    <span class="card-title center-align">Comentario</span>
+                                    <span>Autor: <strong>{{comment.name}}</strong></span>
+                                    <p>Comentario: {{comment.message}}</p>
+                                </div>
+                                <div class="card-action">
+                                    <a href="#" title="Excluir" v-on:click.prevent="removeComment(index)" class="text-deep-orange text-accent-4">Excluir 
+                                    </a>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+            `,
+            data() {
+                return {
+                    comments: [],
+                    name: '',
+                    message: ''
+                }
+            },
+            methods: {
+                addComment() {
+
+                    if (this.name.trim() === '' || this.message.trim() === '') {
+                        alert('preencha todos os campos')
+                    } else {
+                        this.comments.push({
+                            name: this.name,
+                            message: this.message
+                        });
+                        this.name = '';
+                        this.message = '';
+                    }
+                },
+
+                removeComment(index) {
+                    this.comments.splice(index, 1);
+                }
+            }
+        })
+    </script>
+
+    <style>
+        h1 {
+            margin-top: 50px;
+            font-size: 40px;
+            font-style: italic;
+        }
+        
+        @media screen and (max-width: 425px) {
+            h1 {
+                font-size: 23px;
+            }
+        }
+    </style>
+
+
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript " src="https://code.jquery.com/jquery-3.2.1.min.js "></script>
+    <script type="text/javascript " src="js/materialize.min.js "></script>
+    <script type="text/javascript " src="js/main.js "></script>
+</body>
+
+</html>
